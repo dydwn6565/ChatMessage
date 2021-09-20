@@ -1,9 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import React,{useState} from 'react';
 import {Chat} from 'stream-chat-react';
 import {StreamChat} from 'stream-chat';
 import Cookies from 'universal-cookie';
+
+import 'stream-chat-react/dist/css/index.css'
 
 // import ChannelContainer from './components/ChannelContainer';
 // import ChannelListContainer from './components/ChannelListContainer';
@@ -32,12 +34,25 @@ if(authToken){
 
 function App() {
 
+  const [createType,setCreateType] = useState('');
+  const [isCreating,setIsCreating] = useState(false);
+  const [isEditing,setIsEditing] = useState(false);
+
   if(!authToken) return <Auth />
   return (
     <div className="app__wrapper">
       <Chat client={client} theme="team light">
-      <ChannelListContainer />
-      <ChannelContainer />
+      <ChannelListContainer
+      isCreating={isCreating}
+      setIsCreating={setIsCreating}
+      setCreateType={setCreateType}
+      setIsEditing={setIsEditing} />
+      <ChannelContainer 
+       isCreating={isCreating}
+       setIsCreating={setIsCreating}
+       isEditing={isEditing}
+       setIsEditing={setIsEditing}
+       createType={createType} />
       </Chat>
     </div>
   );
